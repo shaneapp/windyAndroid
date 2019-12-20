@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.windyandroid.Data.City
+import com.example.windyandroid.Data.Unsplash.Photo
 import com.example.windyandroid.R
 import com.example.windyandroid.TempStore
 import com.example.windyandroid.View.Adapters.CityAdapter
@@ -40,7 +41,15 @@ class ActivityCitySelect : AppCompatActivity() {
         rvCityResults.layoutManager = LinearLayoutManager(this)
         cityAdapter = CityAdapter(mutableListOf()) { city: City ->
             Toast.makeText(this@ActivityCitySelect, "${city.name} selected", Toast.LENGTH_SHORT).show()
-            TempStore.currentCity = city
+            viewModel.setCurrentCity(city)
+            compositeDisposable.add(
+                viewModel.fetchCityImageFromUnsplash(city.name)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this@ActivityCitySelect::cityImageLoaded) {
+                        it.printStackTrace()
+                    }
+            )
         }
         rvCityResults.adapter = cityAdapter
 
@@ -87,6 +96,10 @@ class ActivityCitySelect : AppCompatActivity() {
 
     fun updateCityList(cityList: List<City> ) {
         cityAdapter.updateData(cityList)
+    }
+
+    fun cityImageLoaded(photo: Photo) {
+        print(photo.description)
     }
 
 }
