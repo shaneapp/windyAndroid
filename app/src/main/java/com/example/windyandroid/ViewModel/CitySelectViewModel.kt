@@ -6,7 +6,7 @@ import com.example.windyandroid.Data.City
 import com.example.windyandroid.Model.CityModel
 import io.reactivex.Observable
 
-class CityViewModel constructor(application: Application) : AndroidViewModel(application) {
+class CitySelectViewModel constructor(application: Application) : AndroidViewModel(application) {
 
     val cityModel = CityModel(application)
 

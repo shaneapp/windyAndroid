@@ -12,7 +12,7 @@ import com.example.windyandroid.Data.City
 import com.example.windyandroid.R
 import com.example.windyandroid.TempStore
 import com.example.windyandroid.View.Adapters.CityAdapter
-import com.example.windyandroid.ViewModel.CityViewModel
+import com.example.windyandroid.ViewModel.CitySelectViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -26,7 +26,7 @@ class ActivityCitySelect : AppCompatActivity() {
     private lateinit var subscriptionCityFilter: Disposable
 
     // TODO: use same viewmodel as ActivitySplash because is accesses the CityModel?
-    private lateinit var viewModel: CityViewModel
+    private lateinit var viewModel: CitySelectViewModel
 
     private lateinit var cityAdapter: CityAdapter
 
@@ -34,7 +34,7 @@ class ActivityCitySelect : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_select)
 
-        viewModel = ViewModelProviders.of(this).get(CityViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(CitySelectViewModel::class.java)
 
         // city recycler view
         rvCityResults.layoutManager = LinearLayoutManager(this)
