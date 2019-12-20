@@ -68,6 +68,10 @@ class ActivityCitySelect : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
 
         })
+
+        ivSearchCross.setOnClickListener {
+            etSearch.text.clear()
+        }
     }
 
     override fun onResume() {

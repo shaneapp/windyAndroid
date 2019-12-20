@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llCitySelectCell"
     android:orientation="horizontal"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
     android:gravity="center_vertical">
 
     <ImageView
