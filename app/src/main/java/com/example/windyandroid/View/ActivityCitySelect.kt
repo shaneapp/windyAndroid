@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.windyandroid.Data.City
 import com.example.windyandroid.R
+import com.example.windyandroid.TempStore
 import com.example.windyandroid.View.Adapters.CityAdapter
 import com.example.windyandroid.ViewModel.CityViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,7 +39,8 @@ class ActivityCitySelect : AppCompatActivity() {
         // city recycler view
         rvCityResults.layoutManager = LinearLayoutManager(this)
         cityAdapter = CityAdapter(mutableListOf()) { city: City ->
-            Toast.makeText(this@ActivityCitySelect, city.name, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ActivityCitySelect, "${city.name} selected", Toast.LENGTH_SHORT).show()
+            TempStore.currentCity = city
         }
         rvCityResults.adapter = cityAdapter
 
