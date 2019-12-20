@@ -6,12 +6,16 @@ import com.example.windyandroid.Data.City
 import com.example.windyandroid.Model.CityModel
 import io.reactivex.Observable
 
-class SplashViewModel constructor(application: Application) : AndroidViewModel(application) {
+class CityViewModel constructor(application: Application) : AndroidViewModel(application) {
 
     val cityModel = CityModel(application)
 
-    fun getCityList() : Observable<List<City>> {
+    fun getAllCities() : Observable<List<City>> {
         return Observable.just(cityModel.cityList)
+    }
+
+    fun getFilteredCityListByName(cityFilter: String) : Observable<List<City>> {
+        return Observable.just(cityModel.cityList.filter { it.name.contains(cityFilter, true) })
     }
 
 }
