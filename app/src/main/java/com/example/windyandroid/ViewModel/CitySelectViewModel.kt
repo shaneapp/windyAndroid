@@ -29,4 +29,8 @@ class CitySelectViewModel constructor(application: Application) : AndroidViewMod
         TempStore.currentCity = city
     }
 
+    fun setCurrentImage(photo: Photo) {
+        TempStore.currentImage = photo
+    }
+
 }

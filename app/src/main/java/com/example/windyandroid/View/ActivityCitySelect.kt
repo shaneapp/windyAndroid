@@ -99,7 +99,7 @@ class ActivityCitySelect : AppCompatActivity() {
     }
 
     fun cityImageLoaded(photo: Photo) {
-        print(photo.description)
+        viewModel.setCurrentImage(photo)
     }
 
 }
