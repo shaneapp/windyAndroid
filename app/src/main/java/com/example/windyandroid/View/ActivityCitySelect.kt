@@ -1,6 +1,7 @@
 package com.example.windyandroid.View
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -109,6 +110,7 @@ class ActivityCitySelect : AppCompatActivity() {
     fun cityDataLoaded(tempCity: TempCity) {
         viewModel.setCurrentCityData(tempCity)
         dialogLoading.hide()
+        startActivity(Intent(this, ActivityWeather::class.java))
     }
 
 }

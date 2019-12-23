@@ -23,6 +23,7 @@
         </activity>
 
         <activity android:name=".View.ActivityCitySelect" />
+        <activity android:name=".View.ActivityWeather" />
 
     </application>
 
