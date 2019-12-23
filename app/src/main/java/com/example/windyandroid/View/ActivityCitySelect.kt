@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.windyandroid.Data.City
+import com.example.windyandroid.Data.OpenWeather.WeatherData
 import com.example.windyandroid.Data.Unsplash.Photo
 import com.example.windyandroid.R
 import com.example.windyandroid.TempStore
@@ -43,10 +44,16 @@ class ActivityCitySelect : AppCompatActivity() {
             Toast.makeText(this@ActivityCitySelect, "${city.name} selected", Toast.LENGTH_SHORT).show()
             viewModel.setCurrentCity(city)
             compositeDisposable.add(
-                viewModel.fetchCityImageFromUnsplash(city.name)
+//                viewModel.fetchCityImageFromUnsplash(city.name)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(this@ActivityCitySelect::cityImageLoaded) {
+//                        it.printStackTrace()
+//                    }
+                viewModel.fetchCurrentWeather(city.id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this@ActivityCitySelect::cityImageLoaded) {
+                    .subscribe(this@ActivityCitySelect::cityWeatherLoaded) {
                         it.printStackTrace()
                     }
             )
@@ -100,6 +107,10 @@ class ActivityCitySelect : AppCompatActivity() {
 
     fun cityImageLoaded(photo: Photo) {
         viewModel.setCurrentImage(photo)
+    }
+
+    fun cityWeatherLoaded(weatherData: WeatherData) {
+        print(weatherData.wind.deg)
     }
 
 }
