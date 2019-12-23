@@ -1,5 +1,6 @@
 package com.example.windyandroid.View
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -30,22 +31,31 @@ class ActivityCitySelect : AppCompatActivity() {
 
     private lateinit var cityAdapter: CityAdapter
 
+    private lateinit var dialogLoading: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_select)
 
         viewModel = ViewModelProviders.of(this).get(CitySelectViewModel::class.java)
 
+        dialogLoading = Dialog(this)
+        dialogLoading.setContentView(R.layout.dialog_progress)
+        dialogLoading.setCancelable(false)
+
         // city recycler view
         rvCityResults.layoutManager = LinearLayoutManager(this)
         cityAdapter = CityAdapter(mutableListOf()) { city: City ->
-            Toast.makeText(this@ActivityCitySelect, "${city.name} selected", Toast.LENGTH_SHORT).show()
+
+            dialogLoading.show()
+
             compositeDisposable.add(
                 viewModel.fetchAllDataForCity(city)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this@ActivityCitySelect::cityDataLoaded) {
                         it.printStackTrace()
+                        dialogLoading.hide()
                     }
             )
         }
@@ -98,6 +108,7 @@ class ActivityCitySelect : AppCompatActivity() {
 
     fun cityDataLoaded(tempCity: TempCity) {
         viewModel.setCurrentCityData(tempCity)
+        dialogLoading.hide()
     }
 
 }
