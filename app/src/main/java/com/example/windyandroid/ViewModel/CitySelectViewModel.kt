@@ -2,7 +2,7 @@ package com.example.windyandroid.ViewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.windyandroid.Data.City
+import com.example.windyandroid.Data.OpenWeather.City
 import com.example.windyandroid.Data.OpenWeather.WeatherData
 import com.example.windyandroid.Data.Unsplash.Photo
 import com.example.windyandroid.Model.CityModel

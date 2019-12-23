@@ -8,11 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.windyandroid.Data.City
+import com.example.windyandroid.Data.OpenWeather.City
 import com.example.windyandroid.Data.OpenWeather.WeatherData
 import com.example.windyandroid.Data.Unsplash.Photo
 import com.example.windyandroid.R
-import com.example.windyandroid.TempStore
 import com.example.windyandroid.View.Adapters.CityAdapter
 import com.example.windyandroid.ViewModel.CitySelectViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers

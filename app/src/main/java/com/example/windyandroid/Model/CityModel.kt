@@ -2,7 +2,7 @@ package com.example.windyandroid.Model;
 
 import android.app.Application
 import android.content.Context
-import com.example.windyandroid.Data.City
+import com.example.windyandroid.Data.OpenWeather.City
 import com.example.windyandroid.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

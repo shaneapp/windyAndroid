@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.windyandroid.Data.City
+import com.example.windyandroid.Data.OpenWeather.City
 import com.example.windyandroid.R
 import kotlinx.android.synthetic.main.listitem_city_select.view.*
 
