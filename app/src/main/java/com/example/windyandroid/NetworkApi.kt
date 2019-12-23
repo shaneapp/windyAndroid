@@ -4,7 +4,6 @@ import com.example.windyandroid.Data.Unsplash.Photo
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -19,7 +18,7 @@ object NetworkApi {
     private const val UNSPLASH_ENDPOINT = "https://api.unsplash.com/"
 
     // TODO: DO NOT COMMIT
-    const val UNSPLASH_ACCESS_KEY = ""
+    const val UNSPLASH_ACCESS_KEY = "e8376e32bdcc052de5452206ddce81ab439b495e0aaee73e372cc16e4839286c"
 
     private val retrofit = Retrofit.Builder()
         .client(OkHttpClient().newBuilder().build())
@@ -28,13 +27,13 @@ object NetworkApi {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
 
-    val api = retrofit.create(Jet2Interface::class.java)
+    val api = retrofit.create(UnsplashInterface::class.java)
 
     private fun createGsonConverter(): Converter.Factory {
         return GsonConverterFactory.create(GsonBuilder().create())
     }
 
-    interface Jet2Interface {
+    interface UnsplashInterface {
         @GET("/photos/random")
         fun getImagesList(@Query("client_id") api_key: String, @Query("query") searchTerm: String): Observable<Photo>
 
