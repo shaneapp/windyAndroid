@@ -9,9 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.windyandroid.Data.OpenWeather.City
-import com.example.windyandroid.Data.OpenWeather.WeatherData
-import com.example.windyandroid.Data.Unsplash.Photo
 import com.example.windyandroid.R
+import com.example.windyandroid.TempCity
 import com.example.windyandroid.View.Adapters.CityAdapter
 import com.example.windyandroid.ViewModel.CitySelectViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,18 +40,11 @@ class ActivityCitySelect : AppCompatActivity() {
         rvCityResults.layoutManager = LinearLayoutManager(this)
         cityAdapter = CityAdapter(mutableListOf()) { city: City ->
             Toast.makeText(this@ActivityCitySelect, "${city.name} selected", Toast.LENGTH_SHORT).show()
-            viewModel.setCurrentCity(city)
             compositeDisposable.add(
-//                viewModel.fetchCityImageFromUnsplash(city.name)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(this@ActivityCitySelect::cityImageLoaded) {
-//                        it.printStackTrace()
-//                    }
-                viewModel.fetchCurrentWeather(city.id)
+                viewModel.fetchAllDataForCity(city)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this@ActivityCitySelect::cityWeatherLoaded) {
+                    .subscribe(this@ActivityCitySelect::cityDataLoaded) {
                         it.printStackTrace()
                     }
             )
@@ -104,12 +96,8 @@ class ActivityCitySelect : AppCompatActivity() {
         cityAdapter.updateData(cityList)
     }
 
-    fun cityImageLoaded(photo: Photo) {
-        viewModel.setCurrentImage(photo)
-    }
-
-    fun cityWeatherLoaded(weatherData: WeatherData) {
-        print(weatherData.wind.deg)
+    fun cityDataLoaded(tempCity: TempCity) {
+        viewModel.setCurrentCityData(tempCity)
     }
 
 }

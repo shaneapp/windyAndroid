@@ -17,7 +17,7 @@ import retrofit2.http.Url
 
 object NetworkApi {
 
-    private const val UNSPLASH_ENDPOINT = "https://unsplashApi.unsplash.com/"
+    private const val UNSPLASH_ENDPOINT = "https://api.unsplash.com/"
     private const val OPENWEATHER_ENDPOINT = "https://api.openweathermap.org/data/2.5/"
 
     // TODO: DO NOT COMMIT
