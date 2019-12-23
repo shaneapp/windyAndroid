@@ -7,4 +7,6 @@
 
     <color name="offwhite">#E2E2E2</color>
     <color name="colorLightGray">#606A72</color>
+
+    <color name="weatherTransparentBlue">#661976D2</color>
 </resources>

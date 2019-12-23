@@ -32,7 +32,7 @@ class ActivityWeather : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it != null) {
-                        Glide.with(ivCityImage).load(it.photo.urls.regular)
+                        Glide.with(this@ActivityWeather).load(it.photo.urls.regular).into(ivCityImage)
                         tvCityName.text = it.city.name
                         tvWeatherDay.text = "${it.weather.weather[0].main}, ${getDayOfWeek()}"
                         tvCurrentTemp.text = "${kelvinToCelsius(it.weather.main.temp).roundToInt()}\u00b0"

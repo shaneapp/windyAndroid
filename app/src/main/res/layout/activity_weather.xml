@@ -13,8 +13,14 @@
             android:id="@+id/ivCityImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightGray"
+            tools:background="@color/colorLightGray"
             android:scaleType="centerCrop" />
+
+        <View
+            android:id="@+id/viewOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/weatherTransparentBlue" />
 
         <LinearLayout
             android:layout_width="match_parent"
