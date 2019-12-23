@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".View.ActivityCitySelect" />
+        <activity android:name=".View.ActivityCitySelect"
+            android:noHistory="true"/>
         <activity android:name=".View.ActivityWeather" />
 
     </application>
