@@ -1,5 +1,6 @@
 package com.example.windyandroid
 
+import com.example.windyandroid.Data.OpenWeather.ForecastData
 import com.example.windyandroid.Data.OpenWeather.WeatherData
 import com.example.windyandroid.Data.Unsplash.Photo
 import com.google.gson.GsonBuilder
@@ -57,6 +58,9 @@ object NetworkApi {
     interface OpenWeatherInterface {
         @GET(OPENWEATHER_ENDPOINT + "weather")
         fun getCurrentWeather(@Query("id") city_id: Long, @Query("appid") api_key: String): Observable<WeatherData>
+
+        @GET(OPENWEATHER_ENDPOINT + "forecast")
+        fun getHourly4DayForecast(@Query("id") city_id: Long, @Query("appid") api_key: String): Observable<ForecastData>
     }
 
 

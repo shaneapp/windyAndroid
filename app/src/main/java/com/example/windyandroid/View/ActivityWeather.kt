@@ -1,6 +1,7 @@
 package com.example.windyandroid.View
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -26,7 +27,7 @@ class ActivityWeather : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(WeatherViewModel::class.java)
 
-        compositeDisposable.add(
+        compositeDisposable.addAll(
             viewModel.getCityData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,12 +41,26 @@ class ActivityWeather : AppCompatActivity() {
                 }, {
                     it.printStackTrace()
                 })
+
         )
 
     }
 
     override fun onResume() {
         super.onResume()
+
+        compositeDisposable.add(
+            viewModel.get5DayForecast()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it != null) {
+                        Toast.makeText(this@ActivityWeather, it.list.count().toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 
     override fun onPause() {
