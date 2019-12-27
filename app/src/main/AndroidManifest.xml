@@ -15,7 +15,8 @@
 
         <activity
             android:name=".View.ActivitySplash"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,8 +25,9 @@
 
         <activity android:name=".View.ActivityCitySelect"
             android:noHistory="true"/>
+
         <activity android:name=".View.ActivityWeather"
-            android:theme="@style/AppThemeTranslucentStatus"/>
+            android:theme="@style/AppThemeTranslucentStatus" />
 
     </application>
 

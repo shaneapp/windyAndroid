@@ -1,5 +1,6 @@
 package com.example.windyandroid.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Adapter
 import android.widget.Toast
@@ -51,6 +52,10 @@ class ActivityWeather : AppCompatActivity() {
                 })
 
         )
+
+        ivSearchButton.setOnClickListener {
+            startActivity(Intent(this@ActivityWeather, ActivityCitySelect::class.java))
+        }
 
         todayForecastAdapter = DayForecastAdapter(this, mutableListOf())
         rvTodayForecast.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
