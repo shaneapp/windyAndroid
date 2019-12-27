@@ -1,12 +1,18 @@
 package com.example.windyandroid.View
 
 import android.os.Bundle
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.windyandroid.Data.OpenWeather.WeatherData
 import com.example.windyandroid.R
+import com.example.windyandroid.View.Adapters.DayForecastAdapter
 import com.example.windyandroid.ViewModel.WeatherViewModel
+import com.example.windyandroid.getDayOfWeek
+import com.example.windyandroid.kelvinToCelsius
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,6 +26,8 @@ class ActivityWeather : AppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: WeatherViewModel
+
+    private lateinit var todayForecastAdapter: DayForecastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,10 @@ class ActivityWeather : AppCompatActivity() {
 
         )
 
+        todayForecastAdapter = DayForecastAdapter(this, mutableListOf())
+        rvTodayForecast.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvTodayForecast.adapter = todayForecastAdapter
+
     }
 
     override fun onResume() {
@@ -55,7 +67,7 @@ class ActivityWeather : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it != null) {
-                        Toast.makeText(this@ActivityWeather, it.list.count().toString(), Toast.LENGTH_SHORT).show()
+                        todayForecastAdapter.updateData(it.list)
                     }
                 }, {
                     it.printStackTrace()
@@ -66,14 +78,6 @@ class ActivityWeather : AppCompatActivity() {
     override fun onPause() {
         compositeDisposable.clear()
         super.onPause()
-    }
-
-    fun getDayOfWeek(): String {
-        return DateTimeFormat.forPattern("EEEE").print(DateTime())
-    }
-
-    fun kelvinToCelsius(kelvin: Double): Double {
-        return "%.1f".format(kelvin - 273.15f).toDouble()
     }
 
 }

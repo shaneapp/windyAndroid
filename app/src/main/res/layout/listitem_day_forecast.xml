@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="80dp"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorLightGray"
+    app:cardBackgroundColor="@color/colorAccent"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -23,8 +24,8 @@
 
         <ImageView
             android:id="@+id/ivForecastIcon"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_action_search" />
