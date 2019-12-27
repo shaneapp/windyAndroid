@@ -59,7 +59,10 @@ class ActivityWeather : AppCompatActivity() {
         }
 
         todayForecastAdapter = DayForecastAdapter(this, mutableListOf())
-        rvTodayForecast.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        linearLayoutManager.stackFromEnd = true
+        rvTodayForecast.layoutManager = linearLayoutManager
         rvTodayForecast.adapter = todayForecastAdapter
 
     }
@@ -78,6 +81,7 @@ class ActivityWeather : AppCompatActivity() {
                             millisToSeconds(it.dt)).toLocalDate()
                         }
                         todayForecastAdapter.updateData(todaysForecast)
+                        rvTodayForecast.scrollToPosition(0)
                     }
                 }, {
                     it.printStackTrace()
