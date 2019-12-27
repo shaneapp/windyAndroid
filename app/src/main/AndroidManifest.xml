@@ -24,7 +24,8 @@
 
         <activity android:name=".View.ActivityCitySelect"
             android:noHistory="true"/>
-        <activity android:name=".View.ActivityWeather" />
+        <activity android:name=".View.ActivityWeather"
+            android:theme="@style/AppThemeTranslucentStatus"/>
 
     </application>
 
