@@ -14,6 +14,7 @@ import com.example.windyandroid.View.Adapters.DayForecastAdapter
 import com.example.windyandroid.ViewModel.WeatherViewModel
 import com.example.windyandroid.getDayOfWeek
 import com.example.windyandroid.kelvinToCelsius
+import com.example.windyandroid.millisToSeconds
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -70,9 +71,13 @@ class ActivityWeather : AppCompatActivity() {
             viewModel.get5DayForecast()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it != null) {
-                        todayForecastAdapter.updateData(it.list)
+                .subscribe({ forecastData ->
+                    if (forecastData != null) {
+                        val todaysForecast = forecastData.list.filter {
+                            DateTime.now().toLocalDate() == DateTime(
+                            millisToSeconds(it.dt)).toLocalDate()
+                        }
+                        todayForecastAdapter.updateData(todaysForecast)
                     }
                 }, {
                     it.printStackTrace()
