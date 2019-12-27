@@ -49,7 +49,7 @@ object NetworkApi {
 
     interface UnsplashInterface {
         @GET(UNSPLASH_ENDPOINT + "photos/random")
-        fun getImagesList(@Query("client_id") api_key: String, @Query("query") searchTerm: String): Observable<Photo>
+        fun getImagesList(@Query("client_id") api_key: String, @Query("query") searchTerm: String, @Query("featured") featured: Boolean): Observable<Photo>
 
         @GET
         fun executeDownloadEvent(@Url url: String, @Query("client_id") api_key: String): Observable<Response<Void>>
