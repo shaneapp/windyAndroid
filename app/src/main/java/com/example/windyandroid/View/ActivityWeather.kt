@@ -39,25 +39,16 @@ class ActivityWeather : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(WeatherViewModel::class.java)
 
-        compositeDisposable.addAll(
-            viewModel.getCityData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it != null) {
-                        Glide.with(this@ActivityWeather).load(it.photo.urls.regular).into(ivCityImage)
-                        tvCityName.text = it.city.name
-                        tvWeatherDay.text = "${it.weather.weather[0].main}, ${getDayOfWeek()}"
-                        tvCurrentTemp.text = "${kelvinToCelsius(it.weather.main.temp).roundToInt()}\u00b0"
-                    }
-                }, {
-                    it.printStackTrace()
-                })
-
-        )
+        updateCurrentWeather()
 
         ivSearchButton.setOnClickListener {
             startActivity(Intent(this@ActivityWeather, ActivityCitySelect::class.java))
+        }
+
+        fabRefresh.setOnClickListener {
+            // TODO: chain these together and show a spinner
+            updateCurrentWeather()
+            updateForecasts()
         }
 
         todayForecastAdapter = DayForecastAdapter(this, mutableListOf())
@@ -78,6 +69,29 @@ class ActivityWeather : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        updateForecasts()
+    }
+
+    fun updateCurrentWeather() {
+        compositeDisposable.addAll(
+            viewModel.getCityData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it != null) {
+                        Glide.with(this@ActivityWeather).load(it.photo.urls.regular).into(ivCityImage)
+                        tvCityName.text = it.city.name
+                        tvWeatherDay.text = "${it.weather.weather[0].main}, ${getDayOfWeek()}"
+                        tvCurrentTemp.text = "${kelvinToCelsius(it.weather.main.temp).roundToInt()}\u00b0"
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+
+        )
+    }
+
+    fun updateForecasts() {
         compositeDisposable.add(
             viewModel.get5DayForecast()
                 .subscribeOn(Schedulers.io())
@@ -86,12 +100,14 @@ class ActivityWeather : AppCompatActivity() {
                     if (forecastData != null) {
                         val todaysForecast = forecastData.list.filter {
                             DateTime.now().toLocalDate() == DateTime(
-                            millisToSeconds(it.dt)).toLocalDate()
+                                millisToSeconds(it.dt)
+                            ).toLocalDate()
                         }
                         todayForecastAdapter.updateData(todaysForecast)
                         rvTodayForecast.scrollToPosition(0)
 
-                        val dayForecasts = forecastData.list.groupBy { DateTime(millisToSeconds(it.dt)).toLocalDate() }
+                        val dayForecasts =
+                            forecastData.list.groupBy { DateTime(millisToSeconds(it.dt)).toLocalDate() }
                         weekForecastAdapter.updateData(dayForecasts)
                     }
                 }, {
