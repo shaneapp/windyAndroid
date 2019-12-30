@@ -38,7 +38,8 @@
         <com.example.windyandroid.View.Custom.TriangleShapeView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            app:triangleBackgroundColor="@color/default_grey"/>
 
         <LinearLayout
             android:layout_width="match_parent"
