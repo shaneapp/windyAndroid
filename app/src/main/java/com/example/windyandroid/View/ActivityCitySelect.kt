@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.windyandroid.Data.OpenWeather.City
 import com.example.windyandroid.ObjectBox
 import com.example.windyandroid.R
-import com.example.windyandroid.TempCity
+import com.example.windyandroid.CurrentCityData
 import com.example.windyandroid.View.Adapters.CityAdapter
 import com.example.windyandroid.ViewModel.CitySelectViewModel
 import io.objectbox.Box
@@ -113,7 +112,7 @@ class ActivityCitySelect : AppCompatActivity() {
         cityAdapter.updateData(cityList)
     }
 
-    fun cityDataLoaded(tempCity: TempCity) {
+    fun cityDataLoaded(tempCity: CurrentCityData) {
         viewModel.setCurrentCityData(tempCity)
         dialogLoading.hide()
         startActivity(Intent(this, ActivityWeather::class.java))

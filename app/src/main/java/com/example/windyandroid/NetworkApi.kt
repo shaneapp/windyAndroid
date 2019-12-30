@@ -50,9 +50,6 @@ object NetworkApi {
     interface UnsplashInterface {
         @GET(UNSPLASH_ENDPOINT + "photos/random")
         fun getImagesList(@Query("client_id") api_key: String, @Query("query") searchTerm: String, @Query("featured") featured: Boolean): Observable<Photo>
-
-        @GET
-        fun executeDownloadEvent(@Url url: String, @Query("client_id") api_key: String): Observable<Response<Void>>
     }
 
     interface OpenWeatherInterface {
@@ -62,6 +59,5 @@ object NetworkApi {
         @GET(OPENWEATHER_ENDPOINT + "forecast")
         fun getHourly4DayForecast(@Query("id") city_id: Long, @Query("appid") api_key: String): Observable<ForecastData>
     }
-
 
 }

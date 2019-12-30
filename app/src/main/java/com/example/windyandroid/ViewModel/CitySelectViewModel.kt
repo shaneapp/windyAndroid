@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.windyandroid.Data.OpenWeather.City
 import com.example.windyandroid.Model.CityModel
 import com.example.windyandroid.NetworkApi
-import com.example.windyandroid.TempCity
+import com.example.windyandroid.CurrentCityData
 import com.example.windyandroid.TempStore
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
@@ -18,13 +18,13 @@ class CitySelectViewModel constructor(application: Application) : AndroidViewMod
         return Observable.just(cityModel.searchCity(cityFilter))
     }
 
-    fun fetchAllDataForCity(city: City): Observable<TempCity> {
+    fun fetchAllDataForCity(city: City): Observable<CurrentCityData> {
         return Observable.zip(NetworkApi.unsplashApi.getImagesList(NetworkApi.UNSPLASH_ACCESS_KEY, "${city.name} city", true),
             NetworkApi.openweatherApi.getCurrentWeather(city.id, NetworkApi.OPENWEATHER_API_KEY),
-            BiFunction { photo, weather -> TempCity(city, photo, weather) })
+            BiFunction { photo, weather -> CurrentCityData(city, photo, weather) })
     }
 
-    fun setCurrentCityData(tempCity: TempCity) {
+    fun setCurrentCityData(tempCity: CurrentCityData) {
         TempStore.currentCity = tempCity
     }
 
