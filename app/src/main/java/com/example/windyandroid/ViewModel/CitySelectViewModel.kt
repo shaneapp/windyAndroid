@@ -23,7 +23,7 @@ class CitySelectViewModel constructor(application: Application) : AndroidViewMod
     }
 
     fun fetchAllDataForCity(city: City): Observable<TempCity> {
-        return Observable.zip(NetworkApi.unsplashApi.getImagesList(NetworkApi.UNSPLASH_ACCESS_KEY, city.name, true),
+        return Observable.zip(NetworkApi.unsplashApi.getImagesList(NetworkApi.UNSPLASH_ACCESS_KEY, "${city.name} city", true),
             NetworkApi.openweatherApi.getCurrentWeather(city.id, NetworkApi.OPENWEATHER_API_KEY),
             BiFunction { photo, weather -> TempCity(city, photo, weather) })
     }
