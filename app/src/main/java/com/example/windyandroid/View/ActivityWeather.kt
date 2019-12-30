@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.windyandroid.Data.OpenWeather.WeatherData
 import com.example.windyandroid.R
 import com.example.windyandroid.View.Adapters.DayForecastAdapter
+import com.example.windyandroid.View.Adapters.WeekForecastAdapter
 import com.example.windyandroid.ViewModel.WeatherViewModel
 import com.example.windyandroid.getDayOfWeek
 import com.example.windyandroid.kelvinToCelsius
@@ -30,6 +31,7 @@ class ActivityWeather : AppCompatActivity() {
     private lateinit var viewModel: WeatherViewModel
 
     private lateinit var todayForecastAdapter: DayForecastAdapter
+    private lateinit var weekForecastAdapter: WeekForecastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +67,12 @@ class ActivityWeather : AppCompatActivity() {
         rvTodayForecast.layoutManager = linearLayoutManager
         rvTodayForecast.adapter = todayForecastAdapter
 
+        weekForecastAdapter = WeekForecastAdapter(this, mutableMapOf())
+
+        val linearLayoutManagerWeek = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvWeeklyForecast.layoutManager = linearLayoutManagerWeek
+        rvWeeklyForecast.adapter = weekForecastAdapter
+
     }
 
     override fun onResume() {
@@ -82,6 +90,9 @@ class ActivityWeather : AppCompatActivity() {
                         }
                         todayForecastAdapter.updateData(todaysForecast)
                         rvTodayForecast.scrollToPosition(0)
+
+                        val dayForecasts = forecastData.list.groupBy { DateTime(millisToSeconds(it.dt)).toLocalDate() }
+                        weekForecastAdapter.updateData(dayForecasts)
                     }
                 }, {
                     it.printStackTrace()
