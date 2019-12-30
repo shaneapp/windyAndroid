@@ -34,29 +34,32 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|right"
-        android:layout_weight="1">
+        android:gravity="center_vertical|right">
 
         <TextView
             android:id="@+id/tvForecastMin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_gravity="right"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="12\u00b0" />
 
         <TextView
             android:id="@+id/tvForecastMax"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginRight="30dp"
             android:layout_gravity="right"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="9\u00b0" />
 
     </LinearLayout>
