@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 29
@@ -67,5 +69,10 @@ dependencies {
     // lottie
     implementation 'com.airbnb.android:lottie:3.3.1'
     implementation 'com.google.android.material:material:1.0.0'
+
+    // objectbox
+    implementation "io.objectbox:objectbox-android:$objectbox_version"
+    kapt "io.objectbox:objectbox-processor:$objectbox_version"
+    implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
 
 }

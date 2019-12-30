@@ -1,3 +1,8 @@
 package com.example.windyandroid.Data.OpenWeather
 
-data class City(val id: Long, val name: String, val country: String, val coord: Coord)
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.annotation.Transient
+
+@Entity
+data class City(@Id var objectid: Long, var id: Long, var name: String, var country: String, @Transient var coord: Coord)
