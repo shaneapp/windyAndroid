@@ -30,7 +30,7 @@ class DayForecastAdapter(private val context: Context, private val todaysForecas
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val forecastItem = todaysForecast[position]
         val forecastDate = DateTime(millisToSeconds(forecastItem.dt))
-        holder.tvForecastTime.text = SimpleDateFormat("HH:mm").format(forecastDate.toDate())
+        holder.tvForecastTime.text = SimpleDateFormat("ha").format(forecastDate.toDate())
         Glide.with(context).load("https://openweathermap.org/img/wn/${forecastItem.weather[0].icon}@2x.png").into(holder.ivForecastIcon)
         holder.tvForecastTemp.text = "${kelvinToCelsius(forecastItem.main.temp).roundToInt()}\u00b0"
     }

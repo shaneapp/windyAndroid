@@ -6,21 +6,22 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/colorAccent"
-    app:cardCornerRadius="5dp">
+    app:cardBackgroundColor="@color/colorLightGray"
+    android:elevation="5dp"
+    app:cardCornerRadius="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tvForecastTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:textColor="@color/offwhite"
             tools:text="13:00" />
 
         <ImageView
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="14sp"
+            android:textColor="@color/offwhite"
             tools:text="26\u00b0" />
 
     </LinearLayout>
