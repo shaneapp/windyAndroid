@@ -1,21 +1,18 @@
 package com.example.windyandroid.Model;
 
 import android.app.Application
-import android.content.Context
 import com.example.windyandroid.Data.OpenWeather.City
-import com.example.windyandroid.R
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.windyandroid.Data.OpenWeather.City_
+import com.example.windyandroid.ObjectBox
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 class CityModel(application: Application) {
 
-    val cityList: List<City> by lazy {
-        val cityType = object : TypeToken<List<City>>() {}.type
-        Gson().fromJson<List<City>>(getCitiesFromFile(application), cityType)
-    }
+    val cityBox: Box<City> = ObjectBox.boxStore.boxFor()
 
-    private fun getCitiesFromFile(context: Context) : String {
-        return context.resources.openRawResource(R.raw.city_list_minified).bufferedReader().use { it.readText() }
+    fun searchCity(searchTerm: String): List<City> {
+        return cityBox.query().startsWith(City_.name, searchTerm).build().find()
     }
 
 }

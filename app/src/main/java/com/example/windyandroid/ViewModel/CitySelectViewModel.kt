@@ -14,12 +14,8 @@ class CitySelectViewModel constructor(application: Application) : AndroidViewMod
 
     val cityModel = CityModel(application)
 
-    fun getAllCities() : Observable<List<City>> {
-        return Observable.just(cityModel.cityList)
-    }
-
     fun getFilteredCityListByName(cityFilter: String) : Observable<List<City>> {
-        return Observable.just(cityModel.cityList.filter { it.name.contains(cityFilter, true) })
+        return Observable.just(cityModel.searchCity(cityFilter))
     }
 
     fun fetchAllDataForCity(city: City): Observable<TempCity> {

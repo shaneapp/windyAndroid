@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.windyandroid.Data.OpenWeather.City
+import com.example.windyandroid.ObjectBox
 import com.example.windyandroid.R
 import com.example.windyandroid.TempCity
 import com.example.windyandroid.View.Adapters.CityAdapter
 import com.example.windyandroid.ViewModel.CitySelectViewModel
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -33,6 +36,8 @@ class ActivityCitySelect : AppCompatActivity() {
     private lateinit var cityAdapter: CityAdapter
 
     private lateinit var dialogLoading: Dialog
+
+    val cityBox: Box<City> = ObjectBox.boxStore.boxFor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +109,7 @@ class ActivityCitySelect : AppCompatActivity() {
     }
 
     fun updateCityList(cityList: List<City> ) {
+        cityBox.put(cityList)
         cityAdapter.updateData(cityList)
     }
 
