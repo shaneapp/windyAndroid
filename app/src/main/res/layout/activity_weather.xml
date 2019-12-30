@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <FrameLayout
@@ -21,6 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/weatherTransparentBlue" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="70dp"
+            android:clickable="true"
+            app:fabCustomSize="45dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="30dp"
+            android:tint="@android:color/white"
+            android:src="@drawable/ic_action_refresh" />
 
         <com.example.windyandroid.View.Custom.TriangleShapeView
             android:layout_width="match_parent"
