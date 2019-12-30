@@ -82,6 +82,8 @@
         android:layout_marginTop="10dp"
         android:layout_height="110dp" />
 
+    <include layout="@layout/layout_week_forecast_header" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWeeklyForecast"
         android:layout_width="match_parent"
