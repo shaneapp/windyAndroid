@@ -20,6 +20,7 @@ import io.objectbox.kotlin.boxFor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_city_select.*
 import kotlinx.android.synthetic.main.toolbar_search.*
@@ -31,9 +32,7 @@ class ActivityCitySelect : AppCompatActivity() {
 
     // TODO: use same viewmodel as ActivitySplash because is accesses the CityModel?
     private lateinit var viewModel: CitySelectViewModel
-
     private lateinit var cityAdapter: CityAdapter
-
     private lateinit var dialogLoading: Dialog
 
     val cityBox: Box<City> = ObjectBox.boxStore.boxFor()
@@ -54,15 +53,15 @@ class ActivityCitySelect : AppCompatActivity() {
 
             dialogLoading.show()
 
-            compositeDisposable.add(
-                viewModel.fetchAllDataForCity(city)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this@ActivityCitySelect::cityDataLoaded) {
-                        it.printStackTrace()
-                        dialogLoading.hide()
-                    }
-            )
+            viewModel.fetchAllDataForCity(city)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this@ActivityCitySelect::cityDataLoaded) {
+                    it.printStackTrace()
+                    dialogLoading.hide()
+                }
+                .addTo(compositeDisposable)
+
         }
         rvCityResults.adapter = cityAdapter
 

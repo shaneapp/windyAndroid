@@ -26,10 +26,4 @@ class ActivitySplash : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
 }
