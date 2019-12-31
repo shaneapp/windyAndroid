@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.toolbar_search.*
 class ActivityCitySelect : AppCompatActivity() {
 
     private val compositeDisposable = CompositeDisposable()
-    private lateinit var subscriptionCityFilter: Disposable
 
     // TODO: use same viewmodel as ActivitySplash because is accesses the CityModel?
     private lateinit var viewModel: CitySelectViewModel
