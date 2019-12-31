@@ -2,7 +2,6 @@ package com.example.windyandroid.View
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -11,16 +10,13 @@ import com.example.windyandroid.View.Adapters.DayForecastAdapter
 import com.example.windyandroid.View.Adapters.WeekForecastAdapter
 import com.example.windyandroid.ViewModel.WeatherViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_weather.*
 import org.joda.time.DateTime
 import kotlin.math.roundToInt
 
-class ActivityWeather : AppCompatActivity() {
-
-    private val compositeDisposable = CompositeDisposable()
+class ActivityWeather : BaseActivity() {
 
     private lateinit var viewModel: WeatherViewModel
 
@@ -40,7 +36,8 @@ class ActivityWeather : AppCompatActivity() {
         }
 
         fabRefresh.setOnClickListener {
-            // TODO: chain these together and show a spinner
+            // TODO: chain these together and only hide spinner when both complete
+
             updateCurrentWeather()
             updateForecasts()
         }
