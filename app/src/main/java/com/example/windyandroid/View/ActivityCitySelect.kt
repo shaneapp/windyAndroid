@@ -35,7 +35,7 @@ class ActivityCitySelect : AppCompatActivity() {
     private lateinit var cityAdapter: CityAdapter
     private lateinit var dialogLoading: Dialog
 
-    val cityBox: Box<City> = ObjectBox.boxStore.boxFor()
+    private val cityBox: Box<City> = ObjectBox.boxStore.boxFor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,62 +43,66 @@ class ActivityCitySelect : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(CitySelectViewModel::class.java)
 
-        dialogLoading = Dialog(this)
-        dialogLoading.setContentView(R.layout.dialog_progress)
-        dialogLoading.setCancelable(false)
-
-        // city recycler view
-        rvCityResults.layoutManager = LinearLayoutManager(this)
-        cityAdapter = CityAdapter(mutableListOf()) { city: City ->
-
-            dialogLoading.show()
-
-            viewModel.fetchAllDataForCity(city)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this@ActivityCitySelect::cityDataLoaded) {
-                    it.printStackTrace()
-                    dialogLoading.hide()
-                }
-                .addTo(compositeDisposable)
-
-        }
-        rvCityResults.adapter = cityAdapter
-
-        // search field
-        etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                s.let {
-                    if (!it.isNullOrEmpty()) {
-                        rvCityResults.visibility = View.VISIBLE
-
-                        subscriptionCityFilter = viewModel.getFilteredCityListByName(it.toString())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(this@ActivityCitySelect::updateCityList)
-
-                        // TODO: does this leak subscriptions?
-                        compositeDisposable.add(subscriptionCityFilter)
-
-                    } else {
-                        rvCityResults.visibility = View.INVISIBLE
-                    }
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-
-        })
+        setupLoadingDialog()
+        setupCityListRecyclerView()
+        setupSearchField()
 
         ivSearchCross.setOnClickListener {
             etSearch.text.clear()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun setupLoadingDialog() {
+        dialogLoading = Dialog(this)
+        dialogLoading.setContentView(R.layout.dialog_progress)
+        dialogLoading.setCancelable(false)
+    }
+
+    private fun setupCityListRecyclerView() {
+        rvCityResults.layoutManager = LinearLayoutManager(this)
+        cityAdapter = CityAdapter(mutableListOf()) { city: City ->
+            dialogLoading.show()
+            requestAllDataForCity(city)
+        }
+        rvCityResults.adapter = cityAdapter
+    }
+
+    private fun setupSearchField() {
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(searchText: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!searchText.isNullOrEmpty()) {
+                    rvCityResults.visibility = View.VISIBLE
+                    updateCityListWithFilter(searchText.toString())
+                } else {
+                    rvCityResults.visibility = View.INVISIBLE
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+    }
+
+    private fun updateCityListWithFilter(searchText: String) {
+        // TODO: does this leak subscriptions because we don't unsubscribe per text change?
+        viewModel.getFilteredCityListByName(searchText)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this@ActivityCitySelect::updateCityList)
+            .addTo(compositeDisposable)
+    }
+
+    private fun requestAllDataForCity(city: City) {
+        viewModel.fetchAllDataForCity(city)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this@ActivityCitySelect::cityDataLoaded) {
+                it.printStackTrace()
+                dialogLoading.hide()
+            }
+            .addTo(compositeDisposable)
     }
 
     override fun onPause() {
