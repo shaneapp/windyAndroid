@@ -36,8 +36,9 @@ class ActivityWeather : BaseActivity() {
         }
 
         fabRefresh.setOnClickListener {
-            // TODO: chain these together and only hide spinner when both complete
+            showLoadingDialog()
 
+            // TODO: chain these together and only hide spinner when both complete
             updateCurrentWeather()
             updateForecasts()
         }
@@ -87,9 +88,12 @@ class ActivityWeather : BaseActivity() {
 
                     val weekForecast = forecastData.list.groupBy { DateTime(millisToSeconds(it.dt)).toLocalDate() }
                     weekForecastAdapter.updateData(weekForecast)
+
+                    hideLoadingDialog()
                 }
             }, {
                 it.printStackTrace()
+                hideLoadingDialog()
             })
             .addTo(compositeDisposable)
     }
